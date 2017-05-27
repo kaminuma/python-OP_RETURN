@@ -650,6 +650,11 @@ def OP_RETURN_unpack_txn_buffer(buffer):
 	txn['version']=buffer.shift_unpack(4, '<L') # small-endian 32-bits
 	
 	inputs=buffer.shift_varint()
+        segwit = False
+        if inputs==0: # maker = 0: segwit
+		segwit = True
+		buffer.shift(1) # flag
+		inputs=buffer.shift_varint()
 	if inputs>100000: # sanity check
 		return None
 	
@@ -677,6 +682,12 @@ def OP_RETURN_unpack_txn_buffer(buffer):
 		
 		txn['vout'].append(output)
 	
+        if segwit:
+		witnesses=buffer.shift_varint()
+		for _ in range(witnesses):
+			length=buffer.shift_varint()
+			buffer.shift(length) # skip
+
 	txn['locktime']=buffer.shift_unpack(4, '<L')
 	
 	return txn

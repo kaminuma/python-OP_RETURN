@@ -47,8 +47,8 @@ else:
 	OP_RETURN_BITCOIN_USER='' # leave empty to read from ~/.bitcoin/bitcoin.conf (Unix only)
 	OP_RETURN_BITCOIN_PASSWORD='' # leave empty to read from ~/.bitcoin/bitcoin.conf (Unix only)
 	
-OP_RETURN_BTC_FEE=0.0001 # BTC fee to pay per transaction
-OP_RETURN_BTC_DUST=0.00001 # omit BTC outputs smaller than this
+OP_RETURN_BTC_FEE=0.002 # BTC fee to pay per transaction
+OP_RETURN_BTC_DUST=0.001 # omit BTC outputs smaller than this
 
 OP_RETURN_MAX_BYTES=80 # maximum bytes in an OP_RETURN (80 as of Bitcoin 0.11)
 OP_RETURN_MAX_BLOCKS=10 # maximum number of blocks to try when retrieving data
@@ -441,7 +441,7 @@ def OP_RETURN_bitcoin_cmd(command, testnet, *args): # more params are read from 
 		password=OP_RETURN_BITCOIN_PASSWORD
 		
 		if not (len(port) and len(user) and len(password)):
-			conf_lines=open(os.path.expanduser('~')+'/.bitcoin/bitcoin.conf').readlines()
+			conf_lines=open(os.path.expanduser('~')+'/.monacoin/monacoin.conf').readlines()
 			
 			for conf_line in conf_lines:
 				parts=conf_line.strip().split('=', 1) # up to 2 parts
@@ -454,7 +454,7 @@ def OP_RETURN_bitcoin_cmd(command, testnet, *args): # more params are read from 
 					password=parts[1]
 		
 		if not len(port):
-			port=18332 if testnet else 8332
+			port=19402 if testnet else 9402
 			
 		if not (len(user) and len(password)):
 			return None # no point trying in this case

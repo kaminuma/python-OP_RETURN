@@ -53,5 +53,7 @@ result=OP_RETURN_send(send_address, float(send_amount), metadata, testnet)
 if 'error' in result:
 	print('Error: '+result['error'])
 else:
-	print('TxID: '+result['txid']+'\nWait a few seconds then check on: http://'+
-		('testnet.' if testnet else '')+'coinsecrets.org/')
+	print('TxID: '+result['txid']+'\nWait a few seconds then check on: https://'+
+		('testnet.' if testnet else '')+'mona.chainsight.info/tx/'+result['txid'])
+	print('monacoin-cli gettransaction '+result['txid'])
+	print('monacoin-cli getrawtransaction '+result['txid'])

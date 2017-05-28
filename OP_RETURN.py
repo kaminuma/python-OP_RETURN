@@ -683,10 +683,11 @@ def OP_RETURN_unpack_txn_buffer(buffer):
 		txn['vout'].append(output)
 	
         if segwit:
-		witnesses=buffer.shift_varint()
-		for _ in range(witnesses):
-			length=buffer.shift_varint()
-			buffer.shift(length) # skip
+		for _ in range(inputs):
+			witnesses=buffer.shift_varint()
+			for _ in range(witnesses):
+				length=buffer.shift_varint()
+				buffer.shift(length) # skip
 
 	txn['locktime']=buffer.shift_unpack(4, '<L')
 	

@@ -650,8 +650,8 @@ def OP_RETURN_unpack_txn_buffer(buffer):
 	txn['version']=buffer.shift_unpack(4, '<L') # small-endian 32-bits
 	
 	inputs=buffer.shift_varint()
-        segwit = False
-        if inputs==0: # maker = 0: segwit
+	segwit = False
+	if inputs==0: # maker = 0: segwit
 		segwit = True
 		buffer.shift(1) # flag
 		inputs=buffer.shift_varint()
@@ -682,7 +682,7 @@ def OP_RETURN_unpack_txn_buffer(buffer):
 		
 		txn['vout'].append(output)
 	
-        if segwit:
+	if segwit:
 		for _ in range(inputs):
 			witnesses=buffer.shift_varint()
 			for _ in range(witnesses):

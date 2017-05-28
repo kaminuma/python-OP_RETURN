@@ -43,11 +43,15 @@ else:
 data_from_hex=OP_RETURN_hex_to_bin(data)
 if data_from_hex is not None:
 	data=data_from_hex
+else:
+	data=data.decode('utf-8')
 
 result=OP_RETURN_store(data, testnet)
 
 if 'error' in result:
 	print('Error: '+result['error'])
 else:
-	print("TxIDs:\n"+"\n".join(result['txids'])+"\n\nRef: "+result['ref']+"\n\nWait a few seconds then check on: http://"+
-		('testnet.' if testnet else '')+'coinsecrets.org/')
+	print("TxIDs:\n"+"\n".join(result['txids'])+"\n\nRef: "+result['ref']+"\n\nWait a few seconds then check on: https://"+
+		('testnet.' if testnet else '')+'mona.chainsight.info/tx/'+result['txid'])
+	print('monacoin-cli gettransaction '+result['txid'])
+	print('monacoin-cli getrawtransaction '+result['txid'])

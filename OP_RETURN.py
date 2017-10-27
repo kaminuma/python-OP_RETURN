@@ -453,7 +453,7 @@ def OP_RETURN_bitcoin_cmd(command, testnet, *args): # more params are read from 
 				if (parts[0]=='rpcpassword') and not len(password):
 					password=parts[1]
 		
-		if (int(port,10)==0):
+		if (port is None) or (port==0):
 			port=19402 if testnet else 9402
 			
 		if not (len(user) and len(password)):

@@ -37,10 +37,10 @@ except NameError:
 # User-defined quasi-constants
 
 OP_RETURN_BITCOIN_IP='127.0.0.1' # IP address of your bitcoin node
-OP_RETURN_BITCOIN_USE_CMD=False # use command-line instead of JSON-RPC?
+OP_RETURN_BITCOIN_USE_CMD=True # use command-line instead of JSON-RPC?
 
 if OP_RETURN_BITCOIN_USE_CMD:
-	OP_RETURN_BITCOIN_PATH='/usr/bin/bitcoin-cli' # path to bitcoin-cli executable on this server
+	OP_RETURN_BITCOIN_PATH='/usr/bin/monacoin-cli' # path to bitcoin-cli executable on this server
 	
 else:
 	OP_RETURN_BITCOIN_PORT='' # leave empty to use default port for mainnet/testnet
@@ -453,7 +453,7 @@ def OP_RETURN_bitcoin_cmd(command, testnet, *args): # more params are read from 
 				if (parts[0]=='rpcpassword') and not len(password):
 					password=parts[1]
 		
-		if not len(port):
+		if (port is None) or (port==0):
 			port=19402 if testnet else 9402
 			
 		if not (len(user) and len(password)):
